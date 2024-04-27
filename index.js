@@ -30,9 +30,19 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+const artCraftCollection = client.db('dbArtCraft').collection('dbArtCraft')
+
+app.get('/craft', async(req, res)=>{
+    const cursor = artCraftCollection.find()
+    const result = await cursor.toArray()
+    res.send(result)
+})
     app.post('/craft', async(req, res)=>{
         const addCraft = req.body
         console.log(addCraft);
+        const result = await artCraftCollection.insertOne(addCraft);
+        res.send(result)
     })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
