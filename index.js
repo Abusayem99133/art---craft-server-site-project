@@ -9,15 +9,14 @@ const port = process.env.PORT || 5000;
 app.use(cors())
 app.use(express.json())
 
-// paintingProject
-// DWnatRZgTKByidXl
+
 
 console.log(process.env.DB_USER);
+console.log(process.env.DB_PASSWORD);
 
 
 
-const uri = "mongodb+srv://paintingProject:DWnatRZgTKByidXl@cluster0.ddlv3rx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-// const uri = "mongodb+srv://paintingProject:<password>@cluster0.ddlv3rx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ddlv3rx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
