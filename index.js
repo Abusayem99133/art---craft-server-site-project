@@ -9,11 +9,6 @@ const port = process.env.PORT || 5000;
 app.use(cors())
 app.use(express.json())
 
-
-
-
-
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ddlv3rx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // console.log(uri);
@@ -38,6 +33,8 @@ app.get('/craft', async(req, res)=>{
     const result = await cursor.toArray()
     res.send(result)
 })
+// update server
+
 app.get('/craft/:id', async(req, res)=>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id)}
@@ -66,6 +63,31 @@ app.get('/craft/:id', async(req, res)=>{
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
       const result = await artCraftCollection.deleteOne(query)
+      res.send(result)
+    })
+    app.get('/singleCraft/:id', async(req, res)=>{
+      console.log(req.params.id);
+      const result = await artCraftCollection.findOne({_id: new ObjectId(req.params.id)})
+      res.send(result);
+    })
+
+    app.put('/updateCraft/:id',async(req, res)=>{
+      console.log(req.params.id);
+      const query = {_id: new ObjectId (req.params.id)}
+      const craftData = {
+        $set:{
+          item_name:req.body.item_name,
+          image:req.body.image,
+          price:req.body.price,
+          processing_time:req.body.processing_time,
+          rating:req.body.rating,
+          shortDescription:req.body.shortDescription,
+          stockStatus:req.body.stockStatus,
+          sub_Name:req.body.sub_Name,
+        }
+      }
+      const result = await artCraftCollection.updateOne(query,craftData)
+      console.log(result);
       res.send(result)
     })
     // Send a ping to confirm a successful connection
