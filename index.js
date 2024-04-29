@@ -59,18 +59,12 @@ app.get('/craft/:id', async(req, res)=>{
         const result = await artCraftCollection.find({email:req.params.email}).toArray();
         res.send(result)
     })
-    app.delete('/craftDeletes/:id', async(req, res) =>{
-      const id = req.params.id;
-      const query = {_id: new ObjectId(id)}
-      const result = await artCraftCollection.deleteOne(query)
-      res.send(result)
-    })
     app.get('/singleCraft/:id', async(req, res)=>{
       console.log(req.params.id);
       const result = await artCraftCollection.findOne({_id: new ObjectId(req.params.id)})
       res.send(result);
     })
-
+    
     app.put('/updateCraft/:id',async(req, res)=>{
       console.log(req.params.id);
       const query = {_id: new ObjectId (req.params.id)}
@@ -87,6 +81,16 @@ app.get('/craft/:id', async(req, res)=>{
         }
       }
       const result = await artCraftCollection.updateOne(query,craftData)
+      console.log(result);
+      res.send(result)
+    })
+    // app.delete('/craftDeletes/:id', async(req, res) =>{
+   
+    //   const result = await artCraftCollection.deleteOne(query)
+    //   res.send(result)
+    // })
+    app.delete('/craftDelete/:id', async(req, res)=>{
+      const result = await artCraftCollection.deleteOne({_id: new ObjectId(req.params.id)})
       console.log(result);
       res.send(result)
     })
