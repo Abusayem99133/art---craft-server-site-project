@@ -28,10 +28,18 @@ async function run() {
 
 const artCraftCollection = client.db('dbArtCraft').collection('dbArtCraft')
 
+const extraCraftCollection = client.db('dbArtCraft').collection('extraCrafItem')
 app.get('/craft', async(req, res)=>{
     const cursor = artCraftCollection.find()
     const result = await cursor.toArray()
     res.send(result)
+})
+app.get('/extraCraft', async(req, res)=>{
+  
+  const cursor =  extraCraftCollection.find()
+  const result = await cursor.toArray()
+  res.send(result)
+  console.log(result);
 })
 // update server
 
